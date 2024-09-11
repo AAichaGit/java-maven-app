@@ -70,7 +70,7 @@ pipeline {
         }
         stage ('Docker Image Scan') {
             steps {
-              sh "trivy image --format table -o trivy-image-report.html k8s-demo-project/java-maven-app:1.1" 
+              sh "trivy image --format table -o trivy-image-report.html ${REGISTRY}/${APP_NAME}:${IMAGE_TAG" 
             }
         }
         stage ('Push Docker Image') {
@@ -102,8 +102,8 @@ pipeline {
         stage ('verify_deployment') {
             steps {
                 withkubeConfig(cacertificate: '', clusterName: 'kubernetes', contextName: '', credentialsId; 'K8s-cred'
-                    sh "kubectl get pods -n k8s-demo-project
-                    sh "kubectl get svc -n k8s-demo-project
+                    sh "kubectl get pods -n ${K8S_NAMESPACE}
+                    sh "kubectl get svc -n ${K8S_NAMESPACE}
                 }
             }
         } 
